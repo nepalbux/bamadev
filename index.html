@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bamadev Deep - Geologist & KP Astrologer</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:"#125EF7",secondary:''},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap');
+body {
+font-family: 'Poppins', sans-serif;
+scroll-behavior: smooth;
+}
+.serif {
+font-family: 'Merriweather', serif;
+}
+.nav-link {
+position: relative;
+}
+.nav-link::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background-color: #125EF7;
+transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+width: 100%;
+}
+.btn-3d {
+transform: translateY(0);
+box-shadow: 0 4px 6px rgba(18, 94, 247, 0.1), 0 1px 3px rgba(18, 94, 247, 0.08);
+transition: all 0.2s ease;
+}
+.btn-3d:hover {
+transform: translateY(-2px);
+box-shadow: 0 7px 14px rgba(18, 94, 247, 0.1), 0 3px 6px rgba(18, 94, 247, 0.08);
+}
+.btn-3d:active {
+transform: translateY(1px);
+box-shadow: 0 3px 5px rgba(18, 94, 247, 0.1), 0 1px 2px rgba(18, 94, 247, 0.08);
+}
+.slider {
+position: relative;
+overflow: hidden;
+height: 600px;
+}
+.slide {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+opacity: 0;
+transition: opacity 1s ease-in-out;
+background-size: cover;
+background-position: center;
+}
+.slide.active {
+opacity: 1;
+}
+.slide-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+color: white;
+text-align: center;
+padding: 0 20px;
+}
+.dots {
+position: absolute;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 10px;
+}
+.dot {
+width: 12px;
+height: 12px;
+border-radius: 50%;
+background-color: rgba(255,255,255,0.5);
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+.dot.active {
+background-color: white;
+}
+.timeline {
+position: relative;
+}
+.timeline::before {
+content: '';
+position: absolute;
+top: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 4px;
+height: 100%;
+background-color: #e5e7eb;
+}
+.timeline-item {
+position: relative;
+margin-bottom: 60px;
+}
+.timeline-item::before {
+content: '';
+position: absolute;
+top: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background-color: #125EF7;
+z-index: 1;
+}
+.timeline-content {
+position: relative;
+width: 45%;
+}
+.timeline-item:nth-child(odd) .timeline-content {
+margin-left: auto;
+}
+.card-3d {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-3d:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+input:focus, textarea:focus {
+outline: none;
+border-color: #125EF7;
+box-shadow: 0 0 0 3px rgba(18, 94, 247, 0.1);
+}
+.floating-label {
+position: absolute;
+left: 16px;
+top: 16px;
+pointer-events: none;
+transition: 0.2s ease all;
+color: #6b7280;
+}
+input:focus ~ .floating-label,
+input:not(:placeholder-shown) ~ .floating-label,
+textarea:focus ~ .floating-label,
+textarea:not(:placeholder-shown) ~ .floating-label {
+top: -10px;
+left: 10px;
+font-size: 12px;
+color: #125EF7;
+background-color: white;
+padding: 0 6px;
+}
+.back-to-top {
+position: fixed;
+bottom: 20px;
+right: 20px;
+z-index: 99;
+opacity: 0;
+visibility: hidden;
+transition: all 0.3s ease;
+}
+.back-to-top.visible {
+opacity: 1;
+visibility: visible;
+}
+</style>
+</head>
+<body class="bg-white">
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 w-full bg-white bg-opacity-90 backdrop-blur-sm z-50 shadow-sm">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<a href="#" class="text-2xl font-['Arial'] text-primary">Bamadev Guru</a>
+<div class="hidden md:flex space-x-8">
+<a href="#home" class="nav-link text-gray-800 hover:text-primary transition-colors">Home</a>
+<a href="#about" class="nav-link text-gray-800 hover:text-primary transition-colors">About</a>
+<a href="#experience" class="nav-link text-gray-800 hover:text-primary transition-colors">Experience</a>
+<a href="#contact" class="nav-link text-gray-800 hover:text-primary transition-colors">Contact</a>
+<a href="#location" class="nav-link text-gray-800 hover:text-primary transition-colors">Location</a>
+</div>
+<button class="md:hidden w-10 h-10 flex items-center justify-center">
+<i class="ri-menu-line ri-lg text-gray-800"></i>
+</button>
+</div>
+</nav>
+<!-- Mobile Menu -->
+<div class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 md:hidden">
+<div class="flex justify-end p-4">
+<button class="w-10 h-10 flex items-center justify-center">
+<i class="ri-close-line ri-lg text-gray-800"></i>
+</button>
+</div>
+<div class="flex flex-col items-center space-y-6 mt-10">
+<a href="#home" class="text-xl text-gray-800 hover:text-primary transition-colors">Home</a>
+<a href="#about" class="text-xl text-gray-800 hover:text-primary transition-colors">About</a>
+<a href="#experience" class="text-xl text-gray-800 hover:text-primary transition-colors">Experience</a>
+<a href="#contact" class="text-xl text-gray-800 hover:text-primary transition-colors">Contact</a>
+<a href="#location" class="text-xl text-gray-800 hover:text-primary transition-colors">Location</a>
+</div>
+</div>
+<!-- Home Section -->
+<section id="home" class="pt-16">
+<div class="slider">
+<div class="slide active" style="background-image: url('https://public.readdy.ai/ai/img_res/66adf94d9ee3bd6a27cbdc073e76d7ca.jpg')">
+<div class="slide-overlay">
+<h1 class="text-5xl font-bold mb-4">Bridging Earth & Cosmos</h1>
+<p class="text-xl max-w-2xl serif">Welcome to the official website of Bamadev Deep, Geologist & KP Astrologer</p>
+</div>
+</div>
+<div class="slide" style="background-image: url('https://public.readdy.ai/ai/img_res/835a27c64bb000dfc13b8a7df84ceaff.jpg')">
+<div class="slide-overlay">
+<h1 class="text-5xl font-bold mb-4">Decoding Celestial Patterns</h1>
+<p class="text-xl max-w-2xl serif">Combining scientific knowledge with astrological wisdom</p>
+</div>
+</div>
+<div class="slide" style="background-image: url('https://public.readdy.ai/ai/img_res/d82191cfb7e5805acb1b5a6f30d4377c.jpg')">
+<div class="slide-overlay">
+<h1 class="text-5xl font-bold mb-4">Rooted in Nepali Heritage</h1>
+<p class="text-xl max-w-2xl serif">Bringing ancient wisdom from the Himalayas to the modern world</p>
+</div>
+</div>
+<div class="slide" style="background-image: url('https://public.readdy.ai/ai/img_res/39c47515f58d03691d51a39e6eb166c4.jpg')">
+<div class="slide-overlay">
+<h1 class="text-5xl font-bold mb-4">New Horizons in America</h1>
+<p class="text-xl max-w-2xl serif">Continuing the journey of discovery in the United States</p>
+</div>
+</div>
+<div class="dots">
+<span class="dot active"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section id="about" class="py-20 bg-gray-50">
+<div class="container mx-auto px-4">
+<h2 class="text-4xl font-bold text-center mb-16">About Me</h2>
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="md:w-1/2">
+<div class="relative rounded-lg overflow-hidden shadow-xl">
+<img src="https://static.readdy.ai/image/297aba5cef2cdc09c26ee0f479230db9/72c434f5c6ce7dd6009756bbc04fd956.jpeg" alt="Bamadev Deep" class="w-full h-auto object-cover">
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+<h3 class="text-white text-2xl font-bold">Bamadev Deep</h3>
+<p class="text-white opacity-90">Geologist & KP Astrologer</p>
+</div>
+</div>
+</div>
+<div class="md:w-1/2">
+<div class="bg-white p-8 rounded-lg shadow-lg">
+<h3 class="text-2xl font-bold mb-6 text-gray-800">My Journey</h3>
+<div class="space-y-6 serif text-gray-700">
+<p>Born and raised in the picturesque Pokhara Metropolitan City of Nepal, I developed a profound fascination with both the earth beneath our feet and the stars above our heads from an early age.</p>
+<p>My academic journey in geology began in Nepal, where the majestic Himalayas served as my first natural laboratory. The unique geological formations of my homeland inspired me to pursue a deeper understanding of earth sciences.</p>
+<p>Alongside my scientific pursuits, I was drawn to the ancient wisdom of Krishnamurti Paddhati (KP) astrology, finding remarkable connections between celestial patterns and earthly events.</p>
+<p>My quest for knowledge eventually led me to the United States, where I continue to bridge the gap between modern scientific understanding and traditional astrological wisdom, offering insights that honor both perspectives.</p>
+</div>
+<div class="mt-8">
+<a href="#contact" class="inline-block bg-primary text-white px-6 py-3 rounded-button btn-3d whitespace-nowrap">Get in Touch</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Experience Section -->
+<section id="experience" class="py-20">
+<div class="container mx-auto px-4">
+<h2 class="text-4xl font-bold text-center mb-16">Professional Experience</h2>
+<div class="timeline max-w-4xl mx-auto">
+<div class="timeline-item">
+<div class="timeline-content">
+<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<i class="ri-graduation-cap-line ri-lg text-primary"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold">Master's in Geology</h3>
+<p class="text-gray-600">Tribhuvan University, Nepal</p>
+</div>
+</div>
+<p class="text-gray-700">Specialized in structural geology and mineralogy, with field research in the Himalayan region.</p>
+</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-content">
+<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<i class="ri-briefcase-line ri-lg text-primary"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold">Senior Geologist</h3>
+<p class="text-gray-600">Department of Mines & Geology, Nepal</p>
+</div>
+</div>
+<p class="text-gray-700">Led geological surveys and resource assessments across various regions of Nepal.</p>
+</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-content">
+<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<i class="ri-book-open-line ri-lg text-primary"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold">KP Astrology Certification</h3>
+<p class="text-gray-600">Institute of Astrology, Nepal</p>
+</div>
+</div>
+<p class="text-gray-700">Intensive training in Krishnamurti Paddhati system of astrology under renowned practitioners.</p>
+</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-content">
+<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="flex items-center mb-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<i class="ri-flight-takeoff-line ri-lg text-primary"></i>
+</div>
+<div>
+<h3 class="text-xl font-bold">Relocation to USA</h3>
+<p class="text-gray-600">New Chapter</p>
+</div>
+</div>
+<p class="text-gray-700">Bringing expertise in geology and astrology to the United States, offering consultations and research.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-white p-8 rounded-lg shadow-lg card-3d">
+<div class="flex items-center mb-6">
+<div class="w-14 h-14 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<i class="ri-earth-line ri-2x text-primary"></i>
+</div>
+<h3 class="text-2xl font-bold">Geological Expertise</h3>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Structural Geology</span>
+<span class="text-gray-600">95%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 95%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Mineralogy</span>
+<span class="text-gray-600">90%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Geophysical Analysis</span>
+<span class="text-gray-600">85%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Resource Assessment</span>
+<span class="text-gray-600">92%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 92%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-8 rounded-lg shadow-lg card-3d">
+<div class="flex items-center mb-6">
+<div class="w-14 h-14 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<i class="ri-star-line ri-2x text-primary"></i>
+</div>
+<h3 class="text-2xl font-bold">Astrological Expertise</h3>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">KP System</span>
+<span class="text-gray-600">98%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 98%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Natal Chart Analysis</span>
+<span class="text-gray-600">94%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 94%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Transit Predictions</span>
+<span class="text-gray-600">90%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-gray-700">Remedial Measures</span>
+<span class="text-gray-600">88%</span>
+</div>
+<div class="h-2 bg-gray-200 rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 88%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-gray-50">
+<div class="container mx-auto px-4">
+<h2 class="text-4xl font-bold text-center mb-16">Get in Touch</h2>
+<div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+<div class="flex flex-col md:flex-row">
+<div class="md:w-1/2 p-8 bg-primary text-white">
+<h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+<div class="space-y-6">
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4 flex-shrink-0">
+<i class="ri-mail-line text-white"></i>
+</div>
+<div>
+<p class="font-medium">Email</p>
+<p>bamadev.deep@example.com</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4 flex-shrink-0">
+<i class="ri-phone-line text-white"></i>
+</div>
+<div>
+<p class="font-medium">Phone</p>
+<p>+1 (555) 123-4567</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4 flex-shrink-0">
+<i class="ri-map-pin-line text-white"></i>
+</div>
+<div>
+<p class="font-medium">Office</p>
+<p>Python Tech Com Nepal Pvt. Ltd, Pokhara, Nepal</p>
+</div>
+</div>
+</div>
+<div class="mt-10">
+<h4 class="text-xl font-medium mb-4">Connect with me</h4>
+<div class="flex space-x-4">
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-colors">
+<i class="ri-linkedin-fill text-white"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-colors">
+<i class="ri-facebook-fill text-white"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-colors">
+<i class="ri-twitter-fill text-white"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-colors">
+<i class="ri-instagram-fill text-white"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="md:w-1/2 p-8">
+<h3 class="text-2xl font-bold mb-6 text-gray-800">Send a Message</h3>
+<form class="space-y-6">
+<div class="relative">
+<input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder=" ">
+<label for="name" class="floating-label">Full Name</label>
+</div>
+<div class="relative">
+<input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder=" ">
+<label for="email" class="floating-label">Email Address</label>
+</div>
+<div class="relative">
+<textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary" placeholder=" "></textarea>
+<label for="message" class="floating-label">Your Message</label>
+</div>
+<button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-button btn-3d whitespace-nowrap">Send Message</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+<!-- Location Section -->
+<section id="location" class="py-20">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-16">My Location</h2>
+    <div class="max-w-5xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+      <div class="h-[500px] relative">
+        <!-- Begnas Lake Google Map Embed -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3519.242092995239!2d84.1174653150817!3d28.1750829825886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995969a35d5a2a3%3A0x5a1d5a1d5a1d5a1d!2sBegnas%20Lake!5e0!3m2!1sen!2snp!4v1620000000000!5m2!1sen!2snp" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+        </iframe>
+        <div class="absolute top-4 left-4 bg-white p-4 rounded-lg shadow-lg max-w-sm">
+          <h3 class="text-xl font-bold mb-2 text-gray-800">Bamadev Deep</h3>
+          <p class="text-gray-700 mb-4">Currently based in Pokhara, Nepal, offering both in-person and virtual consultations.</p>
+          <div class="flex items-center text-primary">
+            <div class="w-8 h-8 flex items-center justify-center mr-2">
+              <i class="ri-map-pin-line ri-lg"></i>
+            </div>
+            <span>Python Tech Com Nepal Pvt. Ltd, Pokhara</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-4">
+<div class="flex flex-col md:flex-row justify-between items-center mb-8">
+<a href="#" class="text-3xl font-['Arial'] text-white mb-6 md:mb-0">Bamadev Deep Adhikari</a>
+<div class="flex space-x-6">
+  <a href="https://www.youtube.com/watch?v=fFa0QEVAvyw&t=7s" class="text-primary hover:text-primary transition-colors">
+    <div class="w-10 h-10 flex items-center justify-center">
+      <i class="ri-linkedin-fill ri-lg"></i>
+    </div>
+  </a>
+  <a href="https://www.youtube.com/watch?v=fFa0QEVAvyw&t=7s" class="text-primary hover:text-primary transition-colors">
+    <div class="w-10 h-10 flex items-center justify-center">
+      <i class="ri-facebook-fill ri-lg"></i>
+    </div>
+  </a>
+  <a href="https://www.youtube.com/watch?v=fFa0QEVAvyw&t=7s" class="text-primary hover:text-primary transition-colors">
+    <div class="w-10 h-10 flex items-center justify-center">
+      <i class="ri-twitter-fill ri-lg"></i>
+    </div>
+  </a>
+  <a href="https://www.youtube.com/watch?v=fFa0QEVAvyw&t=7s" 
+   class="text-primary hover:text-primary transition-colors" 
+   target="_blank" rel="noopener noreferrer">
+  <div class="w-10 h-10 flex items-center justify-center">
+    <i class="ri-instagram-fill ri-lg"></i>
+  </div>
+</a>
+
+  </a>
+</div>
+</div>
+</a>
+</div>
+</div>
+<hr class="border-gray-800 mb-8">
+<div class="flex flex-col md:flex-row justify-between">
+<div class="mb-6 md:mb-0">
+<h4 class="text-lg font-bold mb-4">Quick Links</h4>
+<div class="grid grid-cols-2 gap-2">
+<a href="#home" class="text-gray-400 hover:text-primary transition-colors">Home</a>
+<a href="#about" class="text-gray-400 hover:text-primary transition-colors">About</a>
+<a href="#experience" class="text-gray-400 hover:text-primary transition-colors">Experience</a>
+<a href="#contact" class="text-gray-400 hover:text-primary transition-colors">Contact</a>
+<a href="#location" class="text-gray-400 hover:text-primary transition-colors">Location</a>
+</div>
+</div>
+<div class="mb-6 md:mb-0">
+<h4 class="text-lg font-bold mb-4">Services</h4>
+<div class="grid grid-cols-1 gap-2">
+<a href="#" class="text-gray-400 hover:text-primary transition-colors">Geological Consultations</a>
+<a href="#" class="text-gray-400 hover:text-primary transition-colors">KP Astrology Readings</a>
+<a href="#" class="text-gray-400 hover:text-primary transition-colors">Educational Workshops</a>
+<a href="#" class="text-gray-400 hover:text-primary transition-colors">Research Collaboration</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-4">Newsletter</h4>
+<p class="text-gray-400 mb-4">Stay updated with my latest insights and offerings.</p>
+<div class="flex">
+<input type="email" placeholder="Your email" class="px-4 py-2 w-full border-none bg-gray-800 text-white rounded-l focus:outline-none">
+<button class="bg-primary text-white px-4 py-2 rounded-r !rounded-button whitespace-nowrap">Subscribe</button>
+</div>
+</div>
+</div>
+<hr class="border-gray-800 my-8">
+<div class="text-center text-gray-500">
+<p>&copy; 2025 Bamadev Deep. All rights reserved.</p>
+</div>
+            <div class="developer-credit">
+            	<p>
+            		            </div>
+
+            </div>
+
+            		<p>
+                <p>Developed by: <a href="https://ptcnepal.com" target="_blank">ptcnepal.com</a></p>
+            </div>
+        </div>
+</footer>
+<!-- Back to Top Button -->
+<button class="back-to-top bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center btn-3d">
+<i class="ri-arrow-up-line ri-lg"></i>
+</button>
+<script>
+// Slider functionality
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+function showSlide(n) {
+slides.forEach(slide => slide.classList.remove('active'));
+dots.forEach(dot => dot.classList.remove('active'));
+slides[n].classList.add('active');
+dots[n].classList.add('active');
+currentSlide = n;
+}
+function nextSlide() {
+currentSlide = (currentSlide + 1) % slides.length;
+showSlide(currentSlide);
+}
+// Initialize slider
+setInterval(nextSlide, 2000);
+// Add click event to dots
+dots.forEach((dot, index) => {
+dot.addEventListener('click', () => {
+showSlide(index);
+});
+});
+// Mobile menu toggle
+const menuButton = document.querySelector('.ri-menu-line').parentElement;
+const closeButton = document.querySelector('.ri-close-line').parentElement;
+const mobileMenu = document.querySelector('.fixed.inset-0.bg-white');
+const mobileLinks = mobileMenu.querySelectorAll('a');
+menuButton.addEventListener('click', () => {
+mobileMenu.classList.remove('translate-x-full');
+});
+closeButton.addEventListener('click', () => {
+mobileMenu.classList.add('translate-x-full');
+});
+mobileLinks.forEach(link => {
+link.addEventListener('click', () => {
+mobileMenu.classList.add('translate-x-full');
+});
+});
+// Back to top button
+const backToTopButton = document.querySelector('.back-to-top');
+window.addEventListener('scroll', () => {
+if (window.pageYOffset > 300) {
+backToTopButton.classList.add('visible');
+} else {
+backToTopButton.classList.remove('visible');
+}
+});
+backToTopButton.addEventListener('click', () => {
+window.scrollTo({
+top: 0,
+behavior: 'smooth'
+});
+});
+// Form validation
+const form = document.querySelector('form');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const messageInput = document.getElementById('message');
+form.addEventListener('submit', (e) => {
+e.preventDefault();
+let isValid = true;
+if (nameInput.value.trim() === '') {
+isValid = false;
+nameInput.classList.add('border-red-500');
+} else {
+nameInput.classList.remove('border-red-500');
+}
+if (emailInput.value.trim() === '' || !isValidEmail(emailInput.value)) {
+isValid = false;
+emailInput.classList.add('border-red-500');
+} else {
+emailInput.classList.remove('border-red-500');
+}
+if (messageInput.value.trim() === '') {
+isValid = false;
+messageInput.classList.add('border-red-500');
+} else {
+messageInput.classList.remove('border-red-500');
+}
+if (isValid) {
+// Form submission logic would go here
+alert('Message sent successfully!');
+form.reset();
+}
+});
+function isValidEmail(email) {
+const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+return re.test(String(email).toLowerCase());
+}
+// Create custom alert for form submission
+function showCustomAlert(message) {
+const alertOverlay = document.createElement('div');
+alertOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+const alertBox = document.createElement('div');
+alertBox.className = 'bg-white p-6 rounded-lg shadow-xl max-w-md mx-4';
+const alertContent = document.createElement('div');
+alertContent.className = 'text-center';
+const icon = document.createElement('div');
+icon.className = 'w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-primary bg-opacity-10 rounded-full';
+icon.innerHTML = '<i class="ri-check-line ri-2x text-primary"></i>';
+const text = document.createElement('p');
+text.className = 'text-xl font-medium mb-6';
+text.textContent = message;
+const button = document.createElement('button');
+button.className = 'bg-primary text-white px-6 py-2 rounded-button btn-3d whitespace-nowrap';
+button.textContent = 'OK';
+button.onclick = function() {
+document.body.removeChild(alertOverlay);
+};
+alertContent.appendChild(icon);
+alertContent.appendChild(text);
+alertContent.appendChild(button);
+alertBox.appendChild(alertContent);
+alertOverlay.appendChild(alertBox);
+document.body.appendChild(alertOverlay);
+}
+// Update form submission to use custom alert
+form.addEventListener('submit', (e) => {
+e.preventDefault();
+let isValid = true;
+if (nameInput.value.trim() === '') {
+isValid = false;
+nameInput.classList.add('border-red-500');
+} else {
+nameInput.classList.remove('border-red-500');
+}
+if (emailInput.value.trim() === '' || !isValidEmail(emailInput.value)) {
+isValid = false;
+emailInput.classList.add('border-red-500');
+} else {
+emailInput.classList.remove('border-red-500');
+}
+if (messageInput.value.trim() === '') {
+isValid = false;
+messageInput.classList.add('border-red-500');
+} else {
+messageInput.classList.remove('border-red-500');
+}
+if (isValid) {
+// Form submission logic would go here
+showCustomAlert('Message sent successfully!');
+form.reset();
+}
+});
+</script>
+</body>
+</html>
