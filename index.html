@@ -62,7 +62,7 @@ left: 0;
 width: 100%;
 height: 100%;
 opacity: 0;
-transition: opacity 4s ease-in-out;
+transition: opacity 1s ease-in-out;
 background-size: cover;
 background-position: center;
 }
@@ -290,9 +290,9 @@ visibility: visible;
 <div class="timeline max-w-4xl mx-auto">
 <div class="timeline-item">
 <div class="timeline-content">
-<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg shadow-md card-3d">
 <div class="flex items-center mb-4">
-<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-20 rounded-full mr-4">
 <i class="ri-graduation-cap-line ri-lg text-primary"></i>
 </div>
 <div>
@@ -306,9 +306,9 @@ visibility: visible;
 </div>
 <div class="timeline-item">
 <div class="timeline-content">
-<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="bg-gradient-to-br from-green-50 to-teal-50 p-6 rounded-lg shadow-md card-3d">
 <div class="flex items-center mb-4">
-<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-20 rounded-full mr-4">
 <i class="ri-briefcase-line ri-lg text-primary"></i>
 </div>
 <div>
@@ -322,9 +322,9 @@ visibility: visible;
 </div>
 <div class="timeline-item">
 <div class="timeline-content">
-<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-lg shadow-md card-3d">
 <div class="flex items-center mb-4">
-<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-20 rounded-full mr-4">
 <i class="ri-book-open-line ri-lg text-primary"></i>
 </div>
 <div>
@@ -338,9 +338,9 @@ visibility: visible;
 </div>
 <div class="timeline-item">
 <div class="timeline-content">
-<div class="bg-white p-6 rounded-lg shadow-md card-3d">
+<div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-lg shadow-md card-3d">
 <div class="flex items-center mb-4">
-<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full mr-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-20 rounded-full mr-4">
 <i class="ri-flight-takeoff-line ri-lg text-primary"></i>
 </div>
 <div>
@@ -531,13 +531,14 @@ visibility: visible;
     <h2 class="text-4xl font-bold text-center mb-16">My Location</h2>
     <div class="max-w-5xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
       <div class="h-[500px] relative">
-        <!-- Begnas Lake Google Map Embed -->
-        <iframe src="https://www.google.com/maps/place/Ananda+Jyoti+Secondary+School/@28.1850044,84.1221193,646m/data=!3m1!1e3!4m6!3m5!1s0x3995987283e0c0bb:0x9cb74796baad397f!8m2!3d28.1850044!4d84.1246942!16s%2Fg%2F1xcbn0mh!5m2!1e1!1e4?entry=ttu&g_ep=EgoyMDI1MDQwNi4wIKXMDSoASAFQAw%3D%3D" 
+        <!-- Ananda Jyoti Secondary School Google Map Embed -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.234635785052!2d84.1221193!3d28.1850044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995987283e0c0bb%3A0x9cb74796baad397f!2sAnanda%20Jyoti%20Secondary%20School!5e1!5m2!1sen!2sus!6v1712760000000!5m2!1sen!2sus" 
                 width="100%" 
                 height="100%" 
                 style="border:0;" 
                 allowfullscreen="" 
-                loading="lazy">
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
         </iframe>
         <div class="absolute top-4 left-4 bg-white p-4 rounded-lg shadow-lg max-w-sm">
           <h3 class="text-xl font-bold mb-2 text-gray-800">Bamadev Deep</h3>
@@ -552,12 +553,6 @@ visibility: visible;
       </div>
     </div>
   </div>
-</section>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 <!-- Footer -->
 <footer class="bg-gray-900 text-white py-12">
@@ -586,11 +581,6 @@ visibility: visible;
   <div class="w-10 h-10 flex items-center justify-center">
     <i class="ri-instagram-fill ri-lg"></i>
   </div>
-</a>
-
-  </a>
-</div>
-</div>
 </a>
 </div>
 </div>
@@ -628,16 +618,9 @@ visibility: visible;
 <div class="text-center text-gray-500">
 <p>&copy; 2025 Bamadev Deep. All rights reserved.</p>
 </div>
-            <div class="developer-credit">
-            	<p>
-            		            </div>
-
-            </div>
-
-            		<p>
-                <p>Developed by: <a href="https://ptcnepal.com" target="_blank">PTC Nepal</a></p>
-            </div>
-        </div>
+<div class="developer-credit">
+<p>Developed by: <a href="https://ptcnepal.com" target="_blank" class="text-primary hover:underline">PTC Nepal</a></p>
+</div>
 </footer>
 <!-- Back to Top Button -->
 <button class="back-to-top bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center btn-3d">
@@ -659,8 +642,8 @@ function nextSlide() {
 currentSlide = (currentSlide + 1) % slides.length;
 showSlide(currentSlide);
 }
-// Initialize slider
-setInterval(nextSlide, 2000);
+// Initialize slider (changed to 1000ms = 1 second)
+setInterval(nextSlide, 1000);
 // Add click event to dots
 dots.forEach((dot, index) => {
 dot.addEventListener('click', () => {
@@ -767,6 +750,23 @@ e.preventDefault();
 let isValid = true;
 if (nameInput.value.trim() === '') {
 isValid = false;
+nameInput.classList.add('border-red-500');
+} else {
+nameInput.classList.remove('border-red-500');
+}
+if (emailInput.value.trim() === '' || !isValidEmail(emailInput.value)) {
+isValid = false;
+emailInput.classList.add('border-red-500');
+} else {
+emailInput.classList.remove('border-red-500');
+}
+if (messageInput.value.trim() === '') {
+isValid = false;
+messageInput.classList.add('border-red-500');
+} else {
+messageInput.classList.remove('border-red-500');
+}
+if (isValid
 nameInput.classList.add('border-red-500');
 } else {
 nameInput.classList.remove('border-red-500');
